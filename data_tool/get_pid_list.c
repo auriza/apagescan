@@ -44,7 +44,7 @@ int main (int argc, char* argv[]) {
         if (dir_info->d_type == DT_DIR && str_is_digit(dir_info->d_name)) {
             snprintf(pid_name_path, sizeof(pid_name_path), "/proc/%s/cmdline", dir_info->d_name);
             fname = fopen(pid_name_path, "r");
-            fscanf(fname, "%s", pid_raw_name);
+            fgets(pid_raw_name, sizeof(pid_raw_name), fname);
 
             char pid_name[BUF_SIZE] = "";
             char *pid_cut_name = strrchr(pid_raw_name, '/');
