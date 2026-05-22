@@ -41,7 +41,7 @@ def sleep(sec):
     :return: None
     """
     loop = QEventLoop()
-    QTimer.singleShot(sec * 1000, loop.quit)
+    QTimer.singleShot(int(sec * 1000), loop.quit)
     loop.exec_()
 
 
@@ -57,9 +57,9 @@ def clean_tmp_data_from_device(device, remove_page_data=True, remove_pids_data=T
     # Remove binary data from telephone
     try:
         if remove_page_data:
-            exec_command(f'adb -s {device}', 'shell', 'rm', f'/data/local/testing/{page_data_mask}')
+            exec_command(f'adb -s {device}', 'shell', 'rm', f'/data/local/tmp/{page_data_mask}')
         if remove_pids_data:
-            exec_command(f'adb -s {device}', 'shell', 'rm', f'/data/local/testing/{pids_file_mask}')
+            exec_command(f'adb -s {device}', 'shell', 'rm', f'/data/local/tmp/{pids_file_mask}')
     except CalledProcessError:
         pass
 

@@ -314,7 +314,7 @@ class MainView(QMainWindow, Listener):
             self.device_interaction.set_iterations(iterations)
             sleep(self.iteration_time)
             cur_time = time.time()
-            progress.setValue((cur_time - start_time) * 100 // self.total_time)
+            progress.setValue(int((cur_time - start_time) * 100 // self.total_time))
 
         for index, pid in enumerate(self.active_pids):
             if pid['pid'] in error_pids:

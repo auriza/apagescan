@@ -1,4 +1,4 @@
-CFLAGS := -Ofast -static -march=armv7-a
+CFLAGS := -Ofast -static -march=armv8-a
 CC := arm-linux-gnueabi-gcc
 
 all: get_pid_list pagemap read_cgroup transfer clean
@@ -16,4 +16,4 @@ clean:
 	rm -f get_pid_list pagemap read_cgroup
 
 transfer: get_pid_list pagemap read_cgroup
-	adb push $^ /data/local/testing/
+	adb push $^ /data/local/tmp/

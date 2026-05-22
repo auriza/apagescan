@@ -114,13 +114,13 @@ def adb_collect_pid_list(device, tool, filename, pull_path, group_name):
     """
     exec_command(f'adb -s {device}',
                  'shell',
-                 f'/data/local/testing/{tool}',
-                 '/data/local/testing/',
+                 f'/data/local/tmp/{tool}',
+                 '/data/local/tmp/',
                  group_name)
     # pull pid list from device
     exec_command(f'adb -s {device}',
                  'pull',
-                 f'/data/local/testing/{filename}.csv',
+                 f'/data/local/tmp/{filename}.csv',
                  f'./resources/data/{pull_path}',
                  print_output=True)
     return pd.read_csv(f'resources/data/{pull_path}/{filename}.csv', sep=',', header=None).values
@@ -146,15 +146,15 @@ def adb_collect_page_data(device, pid_list):
             filename = f'{pid}_page_data'
             # collect raw data on device
             exec_command(f'adb -s {device}',
-                         'shell',
-                         '/data/local/testing/pagemap',
+                         'shell', 'su', '-c',
+                         '/data/local/tmp/pagemap',
                          str(pid),
-                         '/data/local/testing',
+                         '/data/local/tmp',
                          print_output=True)
             # pull raw data
             exec_command(f'adb -s {device}',
                          'pull',
-                         f'/data/local/testing/{filename}',
+                         f'/data/local/tmp/{filename}',
                          './resources/data/binary_page_data',
                          print_output=True)
             # create data from raw data
