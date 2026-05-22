@@ -146,7 +146,7 @@ def adb_collect_page_data(device, pid_list):
             filename = f'{pid}_page_data'
             # collect raw data on device
             exec_command(f'adb -s {device}',
-                         'shell',
+                         'shell', 'su', '-c',
                          '/data/local/tmp/pagemap',
                          str(pid),
                          '/data/local/tmp',
