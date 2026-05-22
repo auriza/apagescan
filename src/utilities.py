@@ -41,7 +41,7 @@ def sleep(sec):
     :return: None
     """
     loop = QEventLoop()
-    QTimer.singleShot(sec * 1000, loop.quit)
+    QTimer.singleShot(int(sec * 1000), loop.quit)
     loop.exec_()
 
 
