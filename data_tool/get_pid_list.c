@@ -31,19 +31,18 @@ int main (int argc, char* argv[]) {
     DIR* dir_proc = NULL;
 
     char save_path[BUF_SIZE] = "";
-    strcat(save_path, argv[1]);
-    strcat(save_path, "/pid_list.csv");
+    snprintf(save_path, sizeof(save_path), "%s/pid_list.csv", argv[1]);
     FILE* result = fopen(save_path, "w");
 
     dir_proc = opendir(PROC_DIRECTORY);
 
-    char pid_name_path[BUF_SIZE] = "";
+    char pid_name_path[BUF_SIZE+16] = "";
     char pid_raw_name[BUF_SIZE] = "";
     FILE* fname;
 
     while ((dir_info = readdir(dir_proc))) {
         if (dir_info->d_type == DT_DIR && str_is_digit(dir_info->d_name)) {
-            sprintf(pid_name_path, "/proc/%s/cmdline", dir_info->d_name);
+            snprintf(pid_name_path, sizeof(pid_name_path), "/proc/%s/cmdline", dir_info->d_name);
             fname = fopen(pid_name_path, "r");
             fscanf(fname, "%s", pid_raw_name);
 
