@@ -4,11 +4,11 @@ from cairo import ImageSurface, Context, Format
 
 from src.utilities import create_regions_map
 
-RAM_SIZE = 2 ** 31  # 2 gb
-SWAP_SIZE = 20 * (2 ** 20)  # 20 mb
+RAM_SIZE = 2 ** 33  # 8 gb
+SWAP_SIZE = 2 ** 32  # 4 gb
 PAGE_SIZE = 4096
-BLOCK_SIZE = 10  # pixel size
-PAGES_IN_BLOCK = 64
+BLOCK_SIZE = 4  # pixel size
+PAGES_IN_BLOCK = 16
 
 """
 Page size = 4096, i assumed 64 pages in block.
@@ -89,8 +89,13 @@ def plot_pids_pagemap(page_data, colors_list, iteration):
     :param iteration: number of current iteration
     :return: None
     """
-    ram_width, ram_height = 128, 64
-    swap_width, swap_height = 80, 1
+    ram_blocks = RAM_SIZE / (PAGES_IN_BLOCK * PAGE_SIZE)
+    swap_blocks = SWAP_SIZE / (PAGES_IN_BLOCK * PAGE_SIZE)
+
+    ram_width = 512
+    ram_height = int(ram_blocks / ram_width)
+    swap_width = ram_width
+    swap_height = int(swap_blocks / swap_width)
 
     pix_width, pix_height = max(ram_width, swap_width) * BLOCK_SIZE, (ram_height + swap_height + 1) * BLOCK_SIZE
 
